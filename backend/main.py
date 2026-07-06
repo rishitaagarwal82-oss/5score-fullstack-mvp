@@ -1,9 +1,11 @@
 print("🔥 MAIN.PY IS RUNNING")
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from backend.quiz import router as quiz_router
-from backend.frq import router as frq_router
+# IMPORTANT: remove backend. for Render compatibility
+from quiz import router as quiz_router
+from frq import router as frq_router
 
 app = FastAPI()
 
@@ -14,7 +16,8 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:5173",
-        "https://5score-fullstack-mvp-l23o.vercel.app"
+        "https://5score-fullstack-mvp-l23o.vercel.app",
+        "https://5score-fullstack-mvp-2.onrender.com"
     ],
     allow_credentials=True,
     allow_methods=["*"],
