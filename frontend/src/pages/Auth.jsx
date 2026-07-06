@@ -17,7 +17,7 @@ export default function Auth({ onGoogle, onGuest }) {
         <div className="logoBig">🎓 5score</div>
 
         <p className="tagline">
-          Learn faster. Compete smarter.
+          AP Exam practice, Written by real AP students.
         </p>
 
         {loading ? (
