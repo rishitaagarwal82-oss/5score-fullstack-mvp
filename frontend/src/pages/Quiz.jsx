@@ -190,6 +190,12 @@ export default function Quiz({ subject, mode, onExit, onCorrect }) {
                 {mode === "frq" ? "Nice job!" : isCorrect ? "🎉 Correct!" : "❌ Incorrect"}
               </div>
 
+              {mode === "mcq" && q.explanation && (
+                <div className="explanation fadeIn">
+                  <strong>Explanation:</strong> {q.explanation}
+                </div>
+              )}
+
               <div className="authButtons">
                 <button className="btn primary authBtn" onClick={nextQuestion}>
                   Continue →
