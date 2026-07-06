@@ -14,10 +14,10 @@ export default function Auth({ onGoogle, onGuest }) {
 
       <div className="authCard pop">
 
-        <div className="logoBig">🎓 5score</div>
+        <div className="logoBig">5score</div>
 
         <p className="tagline">
-          Learn faster. Compete smarter.
+          AP Exam practice, Written by real AP students.
         </p>
 
         {loading ? (
@@ -27,8 +27,8 @@ export default function Auth({ onGoogle, onGuest }) {
           </div>
         ) : (
           <div className="authButtons">
-            <button className="btn primary authBtn" onClick={handleGoogle}>
-              Continue with Google
+            <button className="btn googleBtn authBtn" onClick={handleGoogle}>
+              <span className="gIcon">G</span> Continue with Google
             </button>
 
             <button className="btn ghost authBtn" onClick={onGuest}>

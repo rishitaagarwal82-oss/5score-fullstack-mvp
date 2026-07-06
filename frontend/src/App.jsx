@@ -12,6 +12,7 @@ export default function App() {
   const [mode, setMode] = useState("mcq");
 
   const [xp, setXp] = useState(0);
+  const [totalScore, setTotalScore] = useState(0);
   const [streak, setStreak] = useState(0);
   const [level, setLevel] = useState(1);
 
@@ -21,6 +22,8 @@ export default function App() {
   const [purchasedUpgrades, setPurchasedUpgrades] = useState([]);
 
   function addXP(amount) {
+    setTotalScore(prev => prev + 1); // Increment total correct answers count
+
     if (isGuest) return; // ⭐ guest = no XP
 
     let multiplier = 1;
@@ -57,13 +60,26 @@ export default function App() {
   }
 
   // ⭐ UPDATED AUTH HANDLING
-  function handleGoogleLogin() {
-    // Simulate OAuth delay
-    setTimeout(() => {
-      setUser({ name: "Rishita", provider: "google" });
-      setIsGuest(false);
-      setStage("home");
-    }, 1500);
+  async function handleGoogleLogin() {
+    try {
+      // Simulate OAuth redirect/popup delay
+      await new Promise(r => setTimeout(r, 1000));
+
+      const res = await fetch("http://localhost:8000/auth/google", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token: "mock_google_token" })
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setUser(data);
+        setIsGuest(false);
+        setStage("home");
+      }
+    } catch (err) {
+      console.error("Auth failed:", err);
+    }
   }
 
   function handleGuest() {
@@ -89,15 +105,17 @@ export default function App() {
   }
 
   if (stage === "home") {
+    const userWithUpgrades = user ? { ...user, purchased: purchasedUpgrades } : null;
     return (
       <Home
         onStart={startQuiz}
         xp={isGuest ? "—" : xp}
         streak={isGuest ? "—" : streak}
         level={isGuest ? "—" : level}
+        score={totalScore}
         onLogout={goAuth}
         onUpgrades={() => setStage("upgrades")}
-        user={user}
+        user={userWithUpgrades}
       />
     );
   }

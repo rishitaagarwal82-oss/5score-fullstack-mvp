@@ -52,7 +52,7 @@ export default function Quiz({ subject, mode, onExit, onCorrect }) {
     return (
       <div className="emptyState">
         <h2>No questions found</h2>
-        <button className="bigBtn" onClick={onExit}>
+        <button className="btn primary" onClick={onExit}>
           🏠 Back Home
         </button>
       </div>
@@ -94,14 +94,14 @@ export default function Quiz({ subject, mode, onExit, onCorrect }) {
   if (!q) {
     return (
       <div className="finishScreen fadeIn">
-        <div className="finishCard popIn">
+        <div className="finishCard pop">
           <h1>🎉 Completed</h1>
 
           <div className="finalScore">
             {score} / {questions.length}
           </div>
 
-          <button className="bigBtn green" onClick={onExit}>
+          <button className="btn success" onClick={onExit}>
             🏠 Back Home
           </button>
         </div>
@@ -129,7 +129,11 @@ export default function Quiz({ subject, mode, onExit, onCorrect }) {
         {/* QUIZ CARD */}
         <div className="quizCard pop">
 
-          <h2>{q.question}</h2>
+          <h2>{q.question || q.frq}</h2>
+
+          <div className="attribution">
+            Question written by: {q.created_by || "AP Curriculum Team"}
+          </div>
 
           {/* MCQ */}
           {mode === "mcq" && (
@@ -139,7 +143,9 @@ export default function Quiz({ subject, mode, onExit, onCorrect }) {
                   key={l}
                   className={`optionBtn ${
                     selected === l ? "selected" : ""
-                  } ${locked && q.correct_answer === l ? "correct" : ""}`}
+                  } ${locked && q.correct_answer === l ? "correct" : ""} ${
+                    locked && selected === l && q.correct_answer !== l ? "wrong" : ""
+                  }`}
                   onClick={() => !locked && setSelected(l)}
                 >
                   {q["choice_" + l.toLowerCase()]}
@@ -150,36 +156,55 @@ export default function Quiz({ subject, mode, onExit, onCorrect }) {
 
           {/* FRQ */}
           {mode === "frq" && (
-            <textarea
-              className="frqBox"
-              placeholder="Type your answer..."
-              onChange={(e) => setSelected(e.target.value)}
-            />
+            <>
+              <textarea
+                className="frqBox"
+                placeholder="Type your answer..."
+                disabled={locked}
+                value={selected}
+                onChange={(e) => setSelected(e.target.value)}
+              />
+              {locked && (
+                <div className="sampleAnswer fadeIn">
+                  <div className="sampleHeader">Sample Answer:</div>
+                  <p>{q.sample_answer}</p>
+                </div>
+              )}
+            </>
           )}
 
           {/* SUBMIT / FEEDBACK */}
           {!locked ? (
             <button
-              className="btn primary submitBtn"
+              className="btn primary authBtn"
+              style={{ width: '100%', marginTop: '24px' }}
               disabled={!selected}
               onClick={submit}
             >
               Submit →
             </button>
           ) : (
-            <div className={`feedbackBox ${isCorrect ? "good" : "bad"}`}>
+            <div className={`feedbackBox ${isCorrect || mode === 'frq' ? "good" : "bad"}`}>
 
               <div className="resultText">
-                {isCorrect ? "🎉 Correct!" : "❌ Incorrect"}
+                {mode === "frq" ? "Nice job!" : isCorrect ? "🎉 Correct!" : "❌ Incorrect"}
               </div>
 
-              <button className="btn primary nextBtn" onClick={nextQuestion}>
-                Continue →
-              </button>
+              {mode === "mcq" && q.explanation && (
+                <div className="explanation fadeIn">
+                  <strong>Explanation:</strong> {q.explanation}
+                </div>
+              )}
 
-              <button className="btn secondary homeMiniBtn" onClick={onExit}>
-                🏠 Home
-              </button>
+              <div className="authButtons">
+                <button className="btn primary authBtn" onClick={nextQuestion}>
+                  Continue →
+                </button>
+
+                <button className="btn secondary authBtn" onClick={onExit}>
+                  🏠 Home
+                </button>
+              </div>
 
             </div>
           )}
