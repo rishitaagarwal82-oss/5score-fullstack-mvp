@@ -1,5 +1,14 @@
 from fastapi import FastAPI
+
 from fastapi.middleware.cors import CORSMiddleware
+app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 from backend.quiz import router as quiz_router
 from backend.frq import router as frq_router
