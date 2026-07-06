@@ -52,7 +52,7 @@ export default function Quiz({ subject, mode, onExit, onCorrect }) {
     return (
       <div className="emptyState">
         <h2>No questions found</h2>
-        <button className="bigBtn" onClick={onExit}>
+        <button className="btn primary" onClick={onExit}>
           🏠 Back Home
         </button>
       </div>
@@ -94,14 +94,14 @@ export default function Quiz({ subject, mode, onExit, onCorrect }) {
   if (!q) {
     return (
       <div className="finishScreen fadeIn">
-        <div className="finishCard popIn">
+        <div className="finishCard pop">
           <h1>🎉 Completed</h1>
 
           <div className="finalScore">
             {score} / {questions.length}
           </div>
 
-          <button className="bigBtn green" onClick={onExit}>
+          <button className="btn success" onClick={onExit}>
             🏠 Back Home
           </button>
         </div>
@@ -160,7 +160,8 @@ export default function Quiz({ subject, mode, onExit, onCorrect }) {
           {/* SUBMIT / FEEDBACK */}
           {!locked ? (
             <button
-              className="btn primary submitBtn"
+              className="btn primary authBtn"
+              style={{ width: '100%', marginTop: '24px' }}
               disabled={!selected}
               onClick={submit}
             >
@@ -173,13 +174,15 @@ export default function Quiz({ subject, mode, onExit, onCorrect }) {
                 {isCorrect ? "🎉 Correct!" : "❌ Incorrect"}
               </div>
 
-              <button className="btn primary nextBtn" onClick={nextQuestion}>
-                Continue →
-              </button>
+              <div className="authButtons">
+                <button className="btn primary authBtn" onClick={nextQuestion}>
+                  Continue →
+                </button>
 
-              <button className="btn secondary homeMiniBtn" onClick={onExit}>
-                🏠 Home
-              </button>
+                <button className="btn secondary authBtn" onClick={onExit}>
+                  🏠 Home
+                </button>
+              </div>
 
             </div>
           )}

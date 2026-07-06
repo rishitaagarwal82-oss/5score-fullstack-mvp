@@ -89,6 +89,7 @@ export default function App() {
   }
 
   if (stage === "home") {
+    const userWithUpgrades = user ? { ...user, purchased: purchasedUpgrades } : null;
     return (
       <Home
         onStart={startQuiz}
@@ -97,7 +98,7 @@ export default function App() {
         level={isGuest ? "—" : level}
         onLogout={goAuth}
         onUpgrades={() => setStage("upgrades")}
-        user={user}
+        user={userWithUpgrades}
       />
     );
   }
