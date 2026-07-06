@@ -134,22 +134,29 @@ body {
 
 .authCard {
   background: var(--card-bg);
-  padding: 48px;
-  border-radius: 24px;
+  padding: 60px 40px;
+  border-radius: 32px;
   width: 100%;
-  max-width: 400px;
+  max-width: 440px;
   text-align: center;
   box-shadow: var(--shadow-lg);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .logoBig {
-  font-size: 48px;
-  font-weight: 800;
-  margin-bottom: 12px;
-  background: linear-gradient(to right, #60a5fa, #34d399);
+  font-size: 64px;
+  font-weight: 900;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, #60a5fa, #34d399);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  line-height: 1.1;
+  width: 100%;
+  display: block;
 }
 
 .tagline {
@@ -176,8 +183,8 @@ body {
 
 /* HOME */
 .homePage {
-  padding: 40px 20px;
-  max-width: 1000px;
+  padding: 40px 40px 80px;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
@@ -231,8 +238,21 @@ body {
 
 .homeGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  justify-content: center;
+}
+
+@media (max-width: 1100px) {
+  .homeGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 750px) {
+  .homeGrid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .homeCard {
@@ -322,7 +342,15 @@ body {
 .quizCard h2 {
   font-size: 1.5rem;
   line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+.attribution {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  font-style: italic;
   margin-bottom: 24px;
+  opacity: 0.8;
 }
 
 .options {
@@ -359,6 +387,30 @@ body {
   background: rgba(34, 197, 94, 0.15) !important;
   border-color: var(--success) !important;
   color: white !important;
+}
+
+.optionBtn.wrong {
+  background: rgba(239, 68, 68, 0.15) !important;
+  border-color: #ef4444 !important;
+  color: white !important;
+}
+
+.sampleAnswer {
+  background: rgba(255,255,255,0.05);
+  border-left: 4px solid var(--primary);
+  padding: 16px;
+  border-radius: 8px;
+  margin-top: 20px;
+  text-align: left;
+}
+
+.sampleHeader {
+  font-weight: bold;
+  color: var(--primary);
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .feedbackBox {

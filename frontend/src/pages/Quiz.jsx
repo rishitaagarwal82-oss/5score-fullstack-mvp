@@ -129,7 +129,11 @@ export default function Quiz({ subject, mode, onExit, onCorrect }) {
         {/* QUIZ CARD */}
         <div className="quizCard pop">
 
-          <h2>{q.question}</h2>
+          <h2>{q.question || q.frq}</h2>
+
+          <div className="attribution">
+            Question written by: {q.created_by || "AP Curriculum Team"}
+          </div>
 
           {/* MCQ */}
           {mode === "mcq" && (
@@ -139,7 +143,9 @@ export default function Quiz({ subject, mode, onExit, onCorrect }) {
                   key={l}
                   className={`optionBtn ${
                     selected === l ? "selected" : ""
-                  } ${locked && q.correct_answer === l ? "correct" : ""}`}
+                  } ${locked && q.correct_answer === l ? "correct" : ""} ${
+                    locked && selected === l && q.correct_answer !== l ? "wrong" : ""
+                  }`}
                   onClick={() => !locked && setSelected(l)}
                 >
                   {q["choice_" + l.toLowerCase()]}
@@ -150,11 +156,21 @@ export default function Quiz({ subject, mode, onExit, onCorrect }) {
 
           {/* FRQ */}
           {mode === "frq" && (
-            <textarea
-              className="frqBox"
-              placeholder="Type your answer..."
-              onChange={(e) => setSelected(e.target.value)}
-            />
+            <>
+              <textarea
+                className="frqBox"
+                placeholder="Type your answer..."
+                disabled={locked}
+                value={selected}
+                onChange={(e) => setSelected(e.target.value)}
+              />
+              {locked && (
+                <div className="sampleAnswer fadeIn">
+                  <div className="sampleHeader">Sample Answer:</div>
+                  <p>{q.sample_answer}</p>
+                </div>
+              )}
+            </>
           )}
 
           {/* SUBMIT / FEEDBACK */}
@@ -168,10 +184,10 @@ export default function Quiz({ subject, mode, onExit, onCorrect }) {
               Submit →
             </button>
           ) : (
-            <div className={`feedbackBox ${isCorrect ? "good" : "bad"}`}>
+            <div className={`feedbackBox ${isCorrect || mode === 'frq' ? "good" : "bad"}`}>
 
               <div className="resultText">
-                {isCorrect ? "🎉 Correct!" : "❌ Incorrect"}
+                {mode === "frq" ? "Nice job!" : isCorrect ? "🎉 Correct!" : "❌ Incorrect"}
               </div>
 
               <div className="authButtons">

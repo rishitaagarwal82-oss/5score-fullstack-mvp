@@ -14,7 +14,7 @@ export default function Auth({ onGoogle, onGuest }) {
 
       <div className="authCard pop">
 
-        <div className="logoBig">🎓 5score</div>
+        <div className="logoBig">5score</div>
 
         <p className="tagline">
           Learn faster. Compete smarter.

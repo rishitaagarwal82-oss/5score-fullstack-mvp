@@ -1,20 +1,26 @@
+import { useEffect, useState } from "react";
 import "../App.css";
+import { getSubjects } from "../api/quiz";
 
 export default function Home({
   onStart,
   xp = 0,
   streak = 0,
   level = 1,
+  score = 0,
   onLogout,
   onUpgrades,
   user
 }) {
-  const subjects = [
-    "AP Biology",
-    "AP Chemistry",
-    "AP Calc",
-    "AP Stats"
-  ];
+  const [subjects, setSubjects] = useState([]);
+
+  useEffect(() => {
+    async function load() {
+      const data = await getSubjects();
+      setSubjects(data);
+    }
+    load();
+  }, []);
 
   return (
     <div className="homePage fadeIn">
@@ -24,6 +30,7 @@ export default function Home({
         <div className="hudGroup">
           <div className="hudItem">🔥 {streak}</div>
           <div className="hudItem">⭐ {xp} XP</div>
+          <div className="hudItem">🏆 {score} Score</div>
           <div className="hudItem">🧠 Lvl {level}</div>
         </div>
 
