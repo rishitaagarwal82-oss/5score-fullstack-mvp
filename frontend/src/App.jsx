@@ -2,10 +2,11 @@ import { useState } from "react";
 import Auth from "./pages/Auth";
 import Home from "./pages/Home";
 import Quiz from "./pages/Quiz";
+import Upgrades from "./pages/Upgrades";
 import "./App.css";
 
 export default function App() {
-  const [stage, setStage] = useState("auth"); // auth | home | quiz
+  const [stage, setStage] = useState("auth"); // auth | home | quiz | upgrades
 
   const [subject, setSubject] = useState("AP Biology");
   const [mode, setMode] = useState("mcq");
@@ -17,12 +18,18 @@ export default function App() {
   // ⭐ NEW: auth + user
   const [user, setUser] = useState(null); // {name, provider}
   const [isGuest, setIsGuest] = useState(false);
+  const [purchasedUpgrades, setPurchasedUpgrades] = useState([]);
 
   function addXP(amount) {
     if (isGuest) return; // ⭐ guest = no XP
 
+    let multiplier = 1;
+    if (purchasedUpgrades.includes("double_xp")) {
+      multiplier = 2;
+    }
+
     setXp((prev) => {
-      const newXP = prev + amount;
+      const newXP = prev + amount * multiplier;
       if (newXP >= level * 50) setLevel((l) => l + 1);
       return newXP;
     });
@@ -51,15 +58,25 @@ export default function App() {
 
   // ⭐ UPDATED AUTH HANDLING
   function handleGoogleLogin() {
-    setUser({ name: "Rishita", provider: "google" }); // later replace w real OAuth
-    setIsGuest(false);
-    setStage("home");
+    // Simulate OAuth delay
+    setTimeout(() => {
+      setUser({ name: "Rishita", provider: "google" });
+      setIsGuest(false);
+      setStage("home");
+    }, 1500);
   }
 
   function handleGuest() {
     setUser({ name: "Guest", provider: "guest" });
     setIsGuest(true);
     setStage("home");
+  }
+
+  function handlePurchase(item) {
+    if (xp >= item.cost) {
+      setXp((prev) => prev - item.cost);
+      setPurchasedUpgrades((prev) => [...prev, item.id]);
+    }
   }
 
   if (stage === "auth") {
@@ -79,7 +96,19 @@ export default function App() {
         streak={isGuest ? "—" : streak}
         level={isGuest ? "—" : level}
         onLogout={goAuth}
+        onUpgrades={() => setStage("upgrades")}
         user={user}
+      />
+    );
+  }
+
+  if (stage === "upgrades") {
+    return (
+      <Upgrades
+        xp={xp}
+        purchased={purchasedUpgrades}
+        onPurchase={handlePurchase}
+        onBack={goHome}
       />
     );
   }

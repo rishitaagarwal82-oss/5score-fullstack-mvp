@@ -127,7 +127,7 @@ export default function Quiz({ subject, mode, onExit, onCorrect }) {
         </div>
 
         {/* QUIZ CARD */}
-        <div className="card quizCard popIn">
+        <div className="quizCard pop">
 
           <h2>{q.question}</h2>
 
@@ -160,7 +160,7 @@ export default function Quiz({ subject, mode, onExit, onCorrect }) {
           {/* SUBMIT / FEEDBACK */}
           {!locked ? (
             <button
-              className="submitBtn"
+              className="btn primary submitBtn"
               disabled={!selected}
               onClick={submit}
             >
@@ -173,11 +173,11 @@ export default function Quiz({ subject, mode, onExit, onCorrect }) {
                 {isCorrect ? "🎉 Correct!" : "❌ Incorrect"}
               </div>
 
-              <button className="nextBtn" onClick={nextQuestion}>
+              <button className="btn primary nextBtn" onClick={nextQuestion}>
                 Continue →
               </button>
 
-              <button className="homeMiniBtn" onClick={onExit}>
+              <button className="btn secondary homeMiniBtn" onClick={onExit}>
                 🏠 Home
               </button>
 

@@ -5,7 +5,8 @@ export default function Home({
   xp = 0,
   streak = 0,
   level = 1,
-  onLogout
+  onLogout,
+  onUpgrades
 }) {
   const subjects = [
     "AP Biology",
@@ -23,6 +24,10 @@ export default function Home({
         <div className="hudItem">🔥 {streak}</div>
         <div className="hudItem">⭐ {xp} XP</div>
         <div className="hudItem">🧠 Lvl {level}</div>
+
+        <button className="btn primary" onClick={onUpgrades}>
+          🚀 Upgrades
+        </button>
 
         <button className="btn secondary" onClick={onLogout}>
           Exit

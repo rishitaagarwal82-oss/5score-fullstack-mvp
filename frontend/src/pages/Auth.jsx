@@ -1,6 +1,14 @@
+import { useState } from "react";
 import "../App.css";
 
-export default function Auth({ onContinue }) {
+export default function Auth({ onGoogle, onGuest }) {
+  const [loading, setLoading] = useState(false);
+
+  const handleGoogle = () => {
+    setLoading(true);
+    onGoogle();
+  };
+
   return (
     <div className="authPage">
 
@@ -12,17 +20,22 @@ export default function Auth({ onContinue }) {
           Learn faster. Compete smarter.
         </p>
 
-        <div className="authButtons">
+        {loading ? (
+          <div className="loadingState">
+            <div className="spinner"></div>
+            <p>Connecting to Google...</p>
+          </div>
+        ) : (
+          <div className="authButtons">
+            <button className="btn primary authBtn" onClick={handleGoogle}>
+              Continue with Google
+            </button>
 
-          <button className="btn primary authBtn" onClick={onContinue}>
-            Continue with Google
-          </button>
-
-          <button className="btn ghost authBtn" onClick={onContinue}>
-            Continue as Guest
-          </button>
-
-        </div>
+            <button className="btn ghost authBtn" onClick={onGuest}>
+              Continue as Guest
+            </button>
+          </div>
+        )}
 
         <div className="smallText">
           No account required to start
