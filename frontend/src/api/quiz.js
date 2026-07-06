@@ -25,6 +25,16 @@ export const getQuestions = async (ap) => {
   }
 };
 
+export const getSubjects = async () => {
+  try {
+    const res = await axios.get(`${API}/subjects`);
+    return Array.isArray(res.data) ? res.data : [];
+  } catch (err) {
+    console.error("Error fetching subjects:", err);
+    return [];
+  }
+};
+
 export const getFRQ = async (ap) => {
   try {
     const res = await axios.get(
