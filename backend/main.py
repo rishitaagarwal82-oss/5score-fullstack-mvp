@@ -3,15 +3,11 @@ print("🔥 MAIN.PY IS RUNNING")
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-# IMPORTANT: remove backend. for Render compatibility
-from quiz import router as quiz_router
-from frq import router as frq_router
+import backend.quiz as quiz
+import backend.frq as frq
 
 app = FastAPI()
 
-# ======================
-# CORS (IMPORTANT)
-# ======================
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -24,15 +20,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ======================
-# ROUTES
-# ======================
-app.include_router(quiz_router)
-app.include_router(frq_router)
+# register routers safely
+app.include_router(quiz.router)
+app.include_router(frq.router)
 
-# ======================
-# HEALTH CHECK
-# ======================
 @app.get("/")
 def home():
     return {"message": "Quiz backend is running"}
