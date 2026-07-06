@@ -27,12 +27,14 @@ export default function Home({
 
       {/* HEADER HUD */}
       <div className="hudBar pop">
-        <div className="hudGroup">
-          <div className="hudItem">🔥 {streak}</div>
-          <div className="hudItem">⭐ {xp} XP</div>
-          <div className="hudItem">🏆 {score} Score</div>
-          <div className="hudItem">🧠 Lvl {level}</div>
-        </div>
+        {user?.provider !== 'guest' && (
+          <div className="hudGroup">
+            <div className="hudItem">🔥 {streak}</div>
+            <div className="hudItem">⭐ {xp} XP</div>
+            <div className="hudItem">🏆 {score} Score</div>
+            <div className="hudItem">🧠 Lvl {level}</div>
+          </div>
+        )}
 
         <div className="hudGroup">
           <button className="btn primary" onClick={onUpgrades}>
@@ -50,7 +52,7 @@ export default function Home({
         <h1 className="homeTitle">
           Welcome back, {user?.name || "Scholar"}{user?.purchased?.includes("pro_badge") || user?.pro ? " 💎" : ""}
         </h1>
-        <p className="homeSub">Ready to continue your {user?.provider === 'google' ? 'Google-synced ' : ''}learning path?</p>
+        <p className="homeSub">Ready to continue your learning path?</p>
       </div>
 
       {/* SUBJECT CARDS */}
