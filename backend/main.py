@@ -1,3 +1,4 @@
+print("🔥 MAIN.PY IS RUNNING")
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
