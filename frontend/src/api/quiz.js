@@ -1,9 +1,12 @@
 import axios from "axios";
 
-const API = "http://127.0.0.1:8000";
+/**
+ * ✅ YOUR REAL BACKEND (Render)
+ */
+const API = "https://fivescore-fullstack-mvp-2.onrender.com";
 
 /**
- * Normalize backend response so UI NEVER breaks
+ * Normalize backend response so UI never breaks
  */
 const normalize = (data) => {
   if (Array.isArray(data)) return data;
