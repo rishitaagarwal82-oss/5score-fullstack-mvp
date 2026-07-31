@@ -27,14 +27,12 @@ export default function Home({
 
       {/* HEADER HUD */}
       <div className="hudBar pop">
-        {user?.provider !== 'guest' && (
-          <div className="hudGroup">
-            <div className="hudItem">🔥 {streak}</div>
-            <div className="hudItem">⭐ {xp} XP</div>
-            <div className="hudItem">🏆 {score} Score</div>
-            <div className="hudItem">🧠 Lvl {level}</div>
-          </div>
-        )}
+        <div className="hudGroup">
+          <div className="hudItem">🔥 {streak}</div>
+          <div className="hudItem">⭐ {xp} XP</div>
+          <div className="hudItem">🏆 {score} Score</div>
+          <div className="hudItem">🧠 Lvl {level}</div>
+        </div>
 
         <div className="hudGroup">
           <button className="btn primary" onClick={onUpgrades}>
