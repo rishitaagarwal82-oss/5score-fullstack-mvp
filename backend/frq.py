@@ -3,9 +3,12 @@ import pandas as pd
 
 router = APIRouter()
 
-df = pd.read_csv("backend/frqs.csv")
-
 
 @router.get("/frq/{ap}")
 def get_frq(ap: str):
-    return df[df["ap"] == ap].to_dict(orient="records")
+    try:
+        df = pd.read_csv("backend/frqs.csv")
+        return df[df["ap"] == ap].to_dict(orient="records")
+    except Exception as e:
+        print(f"Error loading FRQs: {e}")
+        return []
