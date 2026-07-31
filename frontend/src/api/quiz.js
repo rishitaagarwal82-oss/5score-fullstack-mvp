@@ -1,12 +1,10 @@
 import axios from "axios";
 
-/**
- * ✅ YOUR REAL BACKEND (Render)
- */
-const API = "https://fivescore-fullstack-mvp-2.onrender.com";
+// Fallback to current host or environment variable in production
+const API = import.meta.env.VITE_API_URL || "";
 
 /**
- * Normalize backend response so UI never breaks
+ * Normalize backend response so UI NEVER breaks
  */
 const normalize = (data) => {
   if (Array.isArray(data)) return data;
@@ -24,6 +22,16 @@ export const getQuestions = async (ap) => {
     return normalize(res.data);
   } catch (err) {
     console.error("Error fetching questions:", err);
+    return [];
+  }
+};
+
+export const getSubjects = async () => {
+  try {
+    const res = await axios.get(`${API}/subjects`);
+    return Array.isArray(res.data) ? res.data : [];
+  } catch (err) {
+    console.error("Error fetching subjects:", err);
     return [];
   }
 };
