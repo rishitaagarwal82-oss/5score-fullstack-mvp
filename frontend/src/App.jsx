@@ -3,10 +3,12 @@ import Auth from "./pages/Auth";
 import Home from "./pages/Home";
 import Quiz from "./pages/Quiz";
 import Upgrades from "./pages/Upgrades";
+import Leaderboard from "./pages/Leaderboard";
+import Team from "./pages/Team";
 import "./App.css";
 
 export default function App() {
-  const [stage, setStage] = useState("auth"); // auth | home | quiz | upgrades
+  const [stage, setStage] = useState("auth"); // auth | home | quiz | upgrades | leaderboard | team
 
   const [subject, setSubject] = useState("AP Biology");
   const [mode, setMode] = useState("mcq");
@@ -85,6 +87,8 @@ export default function App() {
         score={totalScore}
         onLogout={goAuth}
         onUpgrades={() => setStage("upgrades")}
+        onLeaderboard={() => setStage("leaderboard")}
+        onTeam={() => setStage("team")}
         user={userWithUpgrades}
       />
     );
@@ -96,6 +100,22 @@ export default function App() {
         xp={xp}
         purchased={purchasedUpgrades}
         onPurchase={handlePurchase}
+        onBack={goHome}
+      />
+    );
+  }
+
+  if (stage === "leaderboard") {
+    return (
+      <Leaderboard
+        onBack={goHome}
+      />
+    );
+  }
+
+  if (stage === "team") {
+    return (
+      <Team
         onBack={goHome}
       />
     );
