@@ -4,7 +4,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from backend.quiz import router as quiz_router
 from backend.frq import router as frq_router
 from backend.subjects import router as subjects_router
-from backend.auth import router as auth_router
 
 app = FastAPI()
 
@@ -38,7 +37,6 @@ app.add_middleware(
 app.include_router(quiz_router)
 app.include_router(frq_router)
 app.include_router(subjects_router)
-app.include_router(auth_router)
 
 @app.get("/")
 def home():

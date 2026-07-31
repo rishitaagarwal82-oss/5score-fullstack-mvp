@@ -16,15 +16,11 @@ export default function App() {
   const [streak, setStreak] = useState(0);
   const [level, setLevel] = useState(1);
 
-  // ⭐ NEW: auth + user
-  const [user, setUser] = useState(null); // {name, provider}
-  const [isGuest, setIsGuest] = useState(false);
+  const [user, setUser] = useState(null);
   const [purchasedUpgrades, setPurchasedUpgrades] = useState([]);
 
   function addXP(amount) {
-    setTotalScore(prev => prev + 1); // Increment total correct answers count
-
-    if (isGuest) return; // ⭐ guest = no XP
+    setTotalScore(prev => prev + 1);
 
     let multiplier = 1;
     if (purchasedUpgrades.includes("double_xp")) {
@@ -42,8 +38,7 @@ export default function App() {
     setSubject(s);
     setMode(m);
     setStage("quiz");
-
-    if (!isGuest) setStreak((st) => st + 1);
+    setStreak((st) => st + 1);
   }
 
   function goHome() {
@@ -53,39 +48,14 @@ export default function App() {
   function goAuth() {
     setStage("auth");
     setUser(null);
-    setIsGuest(false);
     setXp(0);
     setStreak(0);
     setLevel(1);
+    setPurchasedUpgrades([]);
   }
 
-  // ⭐ UPDATED AUTH HANDLING
-  async function handleGoogleLogin() {
-    try {
-      // Simulate OAuth redirect/popup delay
-      await new Promise(r => setTimeout(r, 1000));
-
-      const API_URL = import.meta.env.VITE_API_URL || "";
-      const res = await fetch(`${API_URL}/auth/google`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token: "mock_google_token" })
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        setUser(data);
-        setIsGuest(false);
-        setStage("home");
-      }
-    } catch (err) {
-      console.error("Auth failed:", err);
-    }
-  }
-
-  function handleGuest() {
-    setUser({ name: "Guest", provider: "guest" });
-    setIsGuest(true);
+  function handleStartLearning() {
+    setUser({ name: "Scholar", provider: "local" });
     setStage("home");
   }
 
@@ -99,8 +69,7 @@ export default function App() {
   if (stage === "auth") {
     return (
       <Auth
-        onGoogle={handleGoogleLogin}
-        onGuest={handleGuest}
+        onGuest={handleStartLearning}
       />
     );
   }
@@ -110,9 +79,9 @@ export default function App() {
     return (
       <Home
         onStart={startQuiz}
-        xp={isGuest ? "—" : xp}
-        streak={isGuest ? "—" : streak}
-        level={isGuest ? "—" : level}
+        xp={xp}
+        streak={streak}
+        level={level}
         score={totalScore}
         onLogout={goAuth}
         onUpgrades={() => setStage("upgrades")}
