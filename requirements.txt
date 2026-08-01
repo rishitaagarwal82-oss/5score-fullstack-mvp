@@ -18,3 +18,6 @@ typing-inspection==0.4.2
 typing_extensions==4.15.0
 tzdata==2026.2
 uvicorn==0.49.0
+google-auth>=2.20.0
+pyjwt>=2.8.0
+requests>=2.31.0

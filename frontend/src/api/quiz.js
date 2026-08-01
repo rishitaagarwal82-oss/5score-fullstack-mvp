@@ -1,7 +1,4 @@
-import axios from "axios";
-
-// Fallback to local development server if VITE_API_URL is not set
-const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
+import API from "./api";
 
 /**
  * Normalize backend response so UI NEVER breaks
@@ -15,10 +12,7 @@ const normalize = (data) => {
 
 export const getQuestions = async (ap) => {
   try {
-    const res = await axios.get(
-      `${API}/questions/${encodeURIComponent(ap)}`
-    );
-
+    const res = await API.get(`/questions/${encodeURIComponent(ap)}`);
     return normalize(res.data);
   } catch (err) {
     console.error("Error fetching questions:", err);
@@ -28,7 +22,7 @@ export const getQuestions = async (ap) => {
 
 export const getSubjects = async () => {
   try {
-    const res = await axios.get(`${API}/subjects`);
+    const res = await API.get("/subjects");
     return Array.isArray(res.data) ? res.data : [];
   } catch (err) {
     console.error("Error fetching subjects:", err);
@@ -38,10 +32,7 @@ export const getSubjects = async () => {
 
 export const getFRQ = async (ap) => {
   try {
-    const res = await axios.get(
-      `${API}/frq/${encodeURIComponent(ap)}`
-    );
-
+    const res = await API.get(`/frq/${encodeURIComponent(ap)}`);
     return normalize(res.data);
   } catch (err) {
     console.error("Error fetching FRQs:", err);

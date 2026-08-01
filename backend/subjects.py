@@ -1,5 +1,6 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 import pandas as pd
+from backend.routes.auth import get_current_user_id
 
 router = APIRouter()
 
@@ -18,5 +19,5 @@ def get_all_subjects():
         return ["AP Biology", "AP Calculus AB", "AP Statistics", "AP Chemistry"]
 
 @router.get("/subjects")
-def list_subjects():
+def list_subjects(google_id: str = Depends(get_current_user_id)):
     return get_all_subjects()

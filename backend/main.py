@@ -1,13 +1,13 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+import os
 
 from backend.quiz import router as quiz_router
 from backend.frq import router as frq_router
 from backend.subjects import router as subjects_router
+from backend.routes.auth import router as auth_router
 
 app = FastAPI()
-
-import os
 
 # ✅ Robust CORS handling for smooth local development & cloud deployment
 allowed_origins = [
@@ -34,6 +34,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(auth_router)
 app.include_router(quiz_router)
 app.include_router(frq_router)
 app.include_router(subjects_router)
