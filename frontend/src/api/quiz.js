@@ -1,7 +1,7 @@
 import axios from "axios";
 
-// Fallback to current host or environment variable in production
-const API = import.meta.env.VITE_API_URL || "";
+// Fallback to local development server if VITE_API_URL is not set
+const API = import.meta.env.VITE_API_URL || "http://localhost:8000";
 
 /**
  * Normalize backend response so UI NEVER breaks
